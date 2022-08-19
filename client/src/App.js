@@ -1,11 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Typography, Grow, Grid } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
 
 // imported components
 import NavBar from './components/NavBar/NavBar';
 import Posts from './components/Posts/Posts';
 import Form from './components/Form/Form';
+import { getPosts } from './Redux/postsReducer/postsActions';
+
+
+
 const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    getPosts(dispatch);
+  }, [dispatch]);
   return (
     <Container maxWidth='lg'>
       <NavBar />
