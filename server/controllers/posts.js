@@ -4,10 +4,9 @@ export const getPosts = async (req, res) => {
   try {
 
     const postMessages = await PostMessage.find();
-    console.log(postMessages);
-    res.status(200).json(postMessages);
+    return res.status(200).json(postMessages);
   } catch (err) {
-    res.status(404).json({ message: err.message });
+    return res.status(404).json({ message: err.message });
   }
   res.send('this working');
 };

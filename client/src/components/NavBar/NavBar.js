@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Typography, Box } from '@material-ui/core';
+import { Typography, Box } from '@material-ui/core';
 import memories from '../../images/memories.png';
 
 import { StyledAppBar } from './navbar-style.js';
@@ -16,3 +16,4 @@ const NavBar = () => {
 };
 
 export default NavBar;
+

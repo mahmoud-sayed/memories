@@ -1,8 +1,13 @@
 import React from 'react';
+import { TextField, Typography, Button, Paper, ThemeProvider } from '@material-ui/core';
 
 const Form = () => {
   return (
-    <div>Form</div>
+    <Paper elevation={3} sx={{ p: 1 }}>
+      <form autoComplete='off' noValidate >
+
+      </form>
+    </Paper>
   );
 };
 

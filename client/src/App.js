@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Container, Typography, Grow, Grid } from '@material-ui/core';
+import { Container, Grow, Grid } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 
 // imported components
