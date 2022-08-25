@@ -1,4 +1,4 @@
-import { styled, AppBar } from '@material-ui/core';
+import { styled, AppBar } from '@mui/material';
 
 
 
