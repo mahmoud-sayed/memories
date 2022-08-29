@@ -9,6 +9,7 @@ import IconButton, { IconButtonProps } from '@mui/material/IconButton';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ShareIcon from '@mui/icons-material/Share';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ThumbUp from '@mui/icons-material/ThumbUp';
 
 
 
@@ -49,11 +50,40 @@ const Post = ({ post }) => {
         right: '20px',
         color: 'white'
       }}>
-        <Button variant="contained" size='small' onClick={() => { }}>
+        <Button style={{ color: 'white' }} size='small' onClick={() => { }}>
           <MoreHorizIcon fontSize='default' />
         </Button>
       </div>
-      <div ></div>
+      <div style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        margin: '20px'
+      }}>
+        <Typography variant='body2' color='textSecondary'>{post.tags.map(tag => `#${tag} `)}</Typography>
+      </div>
+      <CardContent>
+        <Typography variant='h5' gutterBottom pl={2} pr={2}>{post.message}</Typography>
+      </CardContent>
+      <CardActions style={{
+        padding: '0 16px 8px 16px',
+        display: 'flex',
+        justifyContent: 'space-between',
+      }}>
+        <Button size='small' color='primary' onClick={() => { }} style={{
+          padding: '0 16px 8px 16px',
+          display: 'flex',
+          alignItems: 'center'
+        }}>
+          <ThumbUp fontSize='small ' />
+          {post.likeCount}
+          Like
+        </Button>
+        <Button size='small' color='error' onClick={() => { }}>
+          <DeleteIcon fontSize='small ' />
+          Delete
+          {post.likeCount}
+        </Button>
+      </CardActions>
     </Card >
   );
 };
