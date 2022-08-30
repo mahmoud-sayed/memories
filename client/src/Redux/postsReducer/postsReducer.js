@@ -1,5 +1,5 @@
 
-import { FETCH_POSTS, ADD_POSTS } from './postsTypes';
+import { FETCH_POSTS, ADD_POSTS, UPDATE_POST } from './postsTypes';
 const initialState = [];
 const postsReducer = (state = initialState, action) => {
 
@@ -10,6 +10,8 @@ const postsReducer = (state = initialState, action) => {
     case ADD_POSTS:
       return state = [...state, action.payload];
 
+    case UPDATE_POST:
+      return state = [...state, state.map(post => post._id === action.payload._id ? action.payload : post)];
 
     default:
       return state;

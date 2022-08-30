@@ -1,27 +1,40 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Paper, TextField, Typography, Button } from '@mui/material';
 import FileBase from 'react-file-base64';
 
-import { addPost } from '../../Redux/postsReducer/postsActions';
-import { useDispatch } from 'react-redux';
+import { addPost, updatePost } from '../../Redux/postsReducer/postsActions';
+import { useDispatch, useSelector } from 'react-redux';
 
-const Form = () => {
+const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
     creator: '', title: '', message: '', tags: '', selectedFile: ''
   });
+
+  const post = useSelector(state => currentId ? state.postsReducer.find(post => post._id === currentId) : null);
+
+  useEffect(() => {
+    if (post) setPostData(post);
+  }, [post]);
+
+
 
   const dispatch = useDispatch();
 
   const handelSubmit = (e) => {
     e.preventDefault();
-    addPost(postData, dispatch);
-    setPostData({
-      creator: '', title: '', message: '', tags: '', selectedFile: ''
-    });
+
+    if (currentId) {
+      updatePost(currentId, postData, dispatch);
+    } else {
+      addPost(postData, dispatch);
+    }
+
+    clear();
   };
 
   const clear = () => {
     setPostData({ creator: '', title: '', message: '', tags: '', selectedFile: '' });
+    setCurrentId(null);
   };
   return (
     <Paper elevation={3} sx={{ padding: 2 }}>
@@ -36,7 +49,7 @@ const Form = () => {
           gap: '1rem'
         }}
       >
-        <Typography variant='h6'>Create A Memory</Typography>
+        <Typography variant='h6'>{currentId ? 'Editing' : 'Create'} A Memory</Typography>
         <TextField
           name='creator'
           variant='outlined'

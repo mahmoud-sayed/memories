@@ -1,6 +1,6 @@
 
-import { FETCH_POSTS, ADD_POSTS } from './postsTypes';
-import { fetchPosts, createPost } from './../../api/index';
+import { FETCH_POSTS, ADD_POSTS, UPDATE_POST } from './postsTypes';
+import { fetchPosts, createPost, updatePostOperation } from './../../api/index';
 
 
 export const getPosts = async (dispatch) => {
@@ -25,6 +25,20 @@ export const addPost = async (postData, dispatch) => {
     const { data } = await createPost(postData);
     dispatch({
       type: ADD_POSTS,
+      payload: data
+    });
+
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const updatePost = async (currentId, postData, dispatch) => {
+
+  try {
+    const { data } = await updatePostOperation(currentId, postData);
+    dispatch({
+      type: UPDATE_POST,
       payload: data
     });
 

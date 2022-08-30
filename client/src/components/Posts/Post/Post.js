@@ -14,7 +14,7 @@ import ThumbUp from '@mui/icons-material/ThumbUp';
 
 
 
-const Post = ({ post }) => {
+const Post = ({ post, setCurrentId }) => {
 
 
   return (
@@ -42,7 +42,7 @@ const Post = ({ post }) => {
         color: 'white',
       }}>
         <Typography variant='h6'>{post.creator}</Typography>
-        <Typography variant='h2'>{moment(post.createAt).fromNow}</Typography>
+        <Typography variant='body1'>{moment(post.createAt).fromNow(true)}</Typography>
       </div>
       <div style={{
         position: 'absolute',
@@ -50,7 +50,7 @@ const Post = ({ post }) => {
         right: '20px',
         color: 'white'
       }}>
-        <Button style={{ color: 'white' }} size='small' onClick={() => { }}>
+        <Button style={{ color: 'white' }} size='small' onClick={() => setCurrentId(post._id)}>
           <MoreHorizIcon fontSize='default' />
         </Button>
       </div>
@@ -59,8 +59,11 @@ const Post = ({ post }) => {
         justifyContent: 'space-between',
         margin: '20px'
       }}>
-        <Typography variant='body2' color='textSecondary'>{post.tags.map(tag => `#${tag} `)}</Typography>
+        <Typography variant='body2' color='textSecondary'>
+          {post.tags ? post.tags.map(tag => `#${tag} `) : ''}
+        </Typography>
       </div>
+      <Typography variant='h5' gutterBottom pl={2} pr={2}>{post.title}</Typography>
       <CardContent>
         <Typography variant='h5' gutterBottom pl={2} pr={2}>{post.message}</Typography>
       </CardContent>
@@ -69,19 +72,13 @@ const Post = ({ post }) => {
         display: 'flex',
         justifyContent: 'space-between',
       }}>
-        <Button size='small' color='primary' onClick={() => { }} style={{
-          padding: '0 16px 8px 16px',
-          display: 'flex',
-          alignItems: 'center'
-        }}>
+        <Button size='small' color='primary' onClick={() => { }} >
           <ThumbUp fontSize='small ' />
-          {post.likeCount}
-          Like
+          {post.likeCount} Like
         </Button>
         <Button size='small' color='error' onClick={() => { }}>
           <DeleteIcon fontSize='small ' />
-          Delete
-          {post.likeCount}
+          Delete {post.likeCount}
         </Button>
       </CardActions>
     </Card >
