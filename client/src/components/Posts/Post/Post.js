@@ -10,7 +10,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 // import ShareIcon from '@mui/icons-material/Share';
 // import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ThumbUp from '@mui/icons-material/ThumbUp';
-import { deletePost } from '../../../Redux/postsReducer/postsActions';
+import { deletePost, likePost } from '../../../Redux/postsReducer/postsActions';
 import { useDispatch } from 'react-redux';
 
 
@@ -22,6 +22,10 @@ const Post = ({ post, setCurrentId }) => {
 
   const handelDelete = (id) => {
     deletePost(id, dispatch);
+  };
+
+  const handelLike = (id) => {
+    likePost(id, dispatch);
   };
 
 
@@ -81,13 +85,13 @@ const Post = ({ post, setCurrentId }) => {
         display: 'flex',
         justifyContent: 'space-between',
       }}>
-        <Button size='small' color='primary' onClick={() => { }} >
+        <Button size='small' color='primary' onClick={() => handelLike(post._id)} >
           <ThumbUp fontSize='small ' />
           {post.likeCount} Like
         </Button>
         <Button size='small' color='error' onClick={() => handelDelete(post._id)}>
           <DeleteIcon fontSize='small ' />
-          Delete {post.likeCount}
+          Delete
         </Button>
       </CardActions>
     </Card >
