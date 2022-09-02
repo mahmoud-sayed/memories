@@ -1,20 +1,28 @@
 import React from 'react';
-import { Card, CardActions, CardHeader, CardMedia, CardContent, Collapse, Avatar, Typography, styled, Button } from '@mui/material';
+import { Card, CardActions, CardMedia, CardContent, Typography, Button } from '@mui/material';
 import moment from 'moment';
-import { red } from '@mui/material/colors';
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+// import { red } from '@mui/material/colors';
+// import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import DeleteIcon from '@mui/icons-material/Delete';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
-import IconButton, { IconButtonProps } from '@mui/material/IconButton';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+// import IconButton, { IconButtonProps } from '@mui/material/IconButton';
+// import FavoriteIcon from '@mui/icons-material/Favorite';
+// import ShareIcon from '@mui/icons-material/Share';
+// import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ThumbUp from '@mui/icons-material/ThumbUp';
+import { deletePost } from '../../../Redux/postsReducer/postsActions';
+import { useDispatch } from 'react-redux';
 
 
 
 
 const Post = ({ post, setCurrentId }) => {
+
+  const dispatch = useDispatch();
+
+  const handelDelete = (id) => {
+    deletePost(id, dispatch);
+  };
 
 
   return (
@@ -34,6 +42,7 @@ const Post = ({ post, setCurrentId }) => {
       }}
         image={post.selectedFile}
         title={post.title}
+        component='div'
       />
       <div style={{
         position: 'absolute',
@@ -76,7 +85,7 @@ const Post = ({ post, setCurrentId }) => {
           <ThumbUp fontSize='small ' />
           {post.likeCount} Like
         </Button>
-        <Button size='small' color='error' onClick={() => { }}>
+        <Button size='small' color='error' onClick={() => handelDelete(post._id)}>
           <DeleteIcon fontSize='small ' />
           Delete {post.likeCount}
         </Button>
