@@ -78,7 +78,7 @@ const Post = ({ post, setCurrentId }) => {
       </div>
       <Typography variant='h5' gutterBottom pl={2} pr={2}>{post.title}</Typography>
       <CardContent>
-        <Typography variant='h5' gutterBottom pl={2} pr={2}>{post.message}</Typography>
+        <Typography variant='body2' color='textSecondary' pl={2} pr={2}>{post.message}</Typography>
       </CardContent>
       <CardActions style={{
         padding: '0 16px 8px 16px',
@@ -86,8 +86,9 @@ const Post = ({ post, setCurrentId }) => {
         justifyContent: 'space-between',
       }}>
         <Button size='small' color='primary' onClick={() => handelLike(post._id)} >
-          <ThumbUp fontSize='small ' />
-          {post.likeCount} Like
+          <ThumbUp fontSize='small ' />&nbsp;
+          Like &nbsp;
+          {post.likeCount}
         </Button>
         <Button size='small' color='error' onClick={() => handelDelete(post._id)}>
           <DeleteIcon fontSize='small ' />
