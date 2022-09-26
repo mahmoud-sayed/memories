@@ -7,8 +7,8 @@ export const StyledAppBar = styled(AppBar)(({ theme }) => ({
   margin: '30px 0px',
   display: 'flex',
   flexDirection: 'row',
-  justifyContent: 'center',
-  alignItems: 'center'
-
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '5px'
 }));
 

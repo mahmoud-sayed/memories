@@ -11,8 +11,8 @@ const NavBar = () => {
   return (
     <Box>
       <StyledAppBar position='static' color='inherit'>
-        <Box>
-          <Typography component={Link} style={{ color: 'rgba(0,138,255,1)' }} variant='h2' align='center'>Memories</Typography>
+        <Box sx={{ display: 'flex', alignItems: 'center' }} ml={3}>
+          <Typography component={Link} to='/' style={{ color: 'rgba(0,138,255,1)' }} variant='h2' align='center'>Memories</Typography>
           <img style={{ marginLeft: '15px' }} src={memories} alt="memories logo" height='60' />
         </Box>
         <Toolbar>
