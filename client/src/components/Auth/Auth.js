@@ -4,18 +4,42 @@ import LockIcon from '@mui/icons-material/Lock';
 import Input from './input';
 import { display } from '@mui/system';
 import { GoogleLogin } from 'react-google-login';
+import Icon from './Icon';
+import { useDispatch } from 'react-redux';
+
 
 const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
-
   const [isSignUp, setIsSignUp] = useState(false);
+  const dispatch = useDispatch();
 
   const handelSubmit = () => { };
+
   const handelChange = () => { };
+
   const handelShowPassword = () => setShowPassword(prevShowPassword => !prevShowPassword);
+
   const SwitchMode = () => {
     setIsSignUp(!isSignUp);
   };
+
+  const googleSuccess = async (res) => {
+    const result = res.profileObj;
+    const token = res.tokenId;
+
+    try {
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const googleFailure = (err) => {
+    console.log(err);
+    console.log('Google sign in is not successful please try again later');
+  };
+
+
   return (
     <Container component='main' maxWidth="xs">
       <Paper
@@ -76,8 +100,25 @@ const Auth = () => {
                 type='password'
               />}
           </Grid>
-          <GoogleLogin />
-          <Button type='submit' fullWidth variant='contained' color='primary'>
+          <GoogleLogin
+            clientId='325392147846-vlns5dtvhc0eb1nv6372up18mv90q4e8.apps.googleusercontent.com'
+            render={(renderProps) => (
+              <Button
+                color='error'
+                fullWidth
+                onClick={renderProps.onClick}
+                disabled={renderProps.disabled}
+                startIcon={<Icon />}
+                variant='contained'
+              >
+                {isSignUp ? 'Google SignUp' : 'Google Sign In'}
+              </Button>
+            )}
+            onSuccess={googleSuccess}
+            onFailure={googleFailure}
+            cookiePolicy="single_host_origin"
+          />
+          <Button type='submit' fullWidth variant='contained' color='primary' sx={{ mt: '.8rem' }}>
             {isSignUp ? 'Sign Up' : 'Sign In'}
           </Button>
           <Grid container justifyContent='flex-end'>
