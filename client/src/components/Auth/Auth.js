@@ -1,17 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Avatar, Button, Container, Grid, Paper, TextField, Typography } from '@mui/material';
 import LockIcon from '@mui/icons-material/Lock';
 import Input from './input';
-import { display } from '@mui/system';
-import { GoogleLogin } from 'react-google-login';
-import Icon from './Icon';
+import jwt_decode from "jwt-decode";
+
 import { useDispatch } from 'react-redux';
+import { getAuth } from '../../Redux/AuthReducer/Action';
 
 
 const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const dispatch = useDispatch();
+
+  function handelCallbackResponse(res) {
+    const userObj = jwt_decode(res.credential);
+    console.log(userObj);
+    getAuth({ userObj, dispatch });
+  }
+
+  useEffect(() => {
+    /*global google*/
+    google.accounts.id.initialize({
+      client_id: "884207084303-106co9ouu50heciqh2m8aiert4hvnten.apps.googleusercontent.com",
+      callback: handelCallbackResponse
+    });
+
+    google.accounts.id.prompt(
+      { theme: "outlined", size: "large" }
+    );
+  });
 
   const handelSubmit = () => { };
 
@@ -23,21 +41,22 @@ const Auth = () => {
     setIsSignUp(!isSignUp);
   };
 
-  const googleSuccess = async (res) => {
-    const result = res.profileObj;
-    const token = res.tokenId;
 
-    try {
+  // const googleSuccess = async (res) => {
+  //   const result = res.profileObj;
+  //   const token = res.tokenId;
 
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  //   try {
 
-  const googleFailure = (err) => {
-    console.log(err);
-    console.log('Google sign in is not successful please try again later');
-  };
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // const googleFailure = (err) => {
+  //   console.log(err);
+  //   console.log('Google sign in is not successful please try again later');
+  // };
 
 
   return (
@@ -100,24 +119,7 @@ const Auth = () => {
                 type='password'
               />}
           </Grid>
-          <GoogleLogin
-            clientId='325392147846-vlns5dtvhc0eb1nv6372up18mv90q4e8.apps.googleusercontent.com'
-            render={(renderProps) => (
-              <Button
-                color='error'
-                fullWidth
-                onClick={renderProps.onClick}
-                disabled={renderProps.disabled}
-                startIcon={<Icon />}
-                variant='contained'
-              >
-                {isSignUp ? 'Google SignUp' : 'Google Sign In'}
-              </Button>
-            )}
-            onSuccess={googleSuccess}
-            onFailure={googleFailure}
-            cookiePolicy="single_host_origin"
-          />
+
           <Button type='submit' fullWidth variant='contained' color='primary' sx={{ mt: '.8rem' }}>
             {isSignUp ? 'Sign Up' : 'Sign In'}
           </Button>
