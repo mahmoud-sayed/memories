@@ -1,10 +1,14 @@
-import { AUTH } from './Types';
+import { AUTH, LOGOUT } from './Types';
 
-const authReducer = (state = null, action) => {
+const authReducer = (state = { authData: null }, action) => {
   switch (action.type) {
     case AUTH:
-      console.log(action.payload);
-      return state;
+      localStorage.setItem('profile', JSON.stringify(action.payload));
+      return state = { authData: action.payload };
+
+    case LOGOUT:
+      localStorage.removeItem('profile');
+      return { ...state, authData: null };
     default:
       return state;
   }

@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Typography, Box, Toolbar, IconButton, Stack, Avatar, Button } from '@mui/material';
 import memories from '../../images/memories.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import { StyledAppBar } from './navbar-style.js';
+import { useDispatch } from 'react-redux';
+import { logOut } from '../../Redux/AuthReducer/Action';
 
 const NavBar = () => {
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const user = null;
+  const handelLogOut = () => {
+    logOut({ dispatch });
+    navigate('/');
+    setUser(null);
+  };
+
+  useEffect(() => {
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, [location]);
+
   return (
     <Box>
       <StyledAppBar position='static' color='inherit'>
@@ -17,12 +32,12 @@ const NavBar = () => {
         </Box>
         <Toolbar>
           {user ? (
-            <Stack>
-              <Avatar alt={user.result.name} src={user.result.imageUrl}>
-                {user.result.name.charAt(0)}
+            <Stack direction='row' spacing={2.5} alignItems='center'>
+              <Avatar alt={user.name} src={user.picture}>
+                {user.name.charAt(0)}
               </Avatar>
-              <Typography variant='h6'>{user.result.name}</Typography>
-              <Button variant='contained' color='secondary'>LogOut</Button>
+              <Typography variant='h6'>{user.name}</Typography>
+              <Button variant='contained' color='secondary' onClick={handelLogOut}>LogOut</Button>
             </Stack>
           ) : (
             <Button component={Link} to="/auth" variant='contained' color='primary'>SignIn</Button>

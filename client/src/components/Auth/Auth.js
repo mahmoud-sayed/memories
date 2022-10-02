@@ -3,6 +3,7 @@ import { Avatar, Button, Container, Grid, Paper, TextField, Typography } from '@
 import LockIcon from '@mui/icons-material/Lock';
 import Input from './input';
 import jwt_decode from "jwt-decode";
+import { useNavigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { getAuth } from '../../Redux/AuthReducer/Action';
@@ -12,11 +13,12 @@ const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   function handelCallbackResponse(res) {
     const userObj = jwt_decode(res.credential);
-    console.log(userObj);
     getAuth({ userObj, dispatch });
+    navigate('/');
   }
 
   useEffect(() => {
