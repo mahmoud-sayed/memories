@@ -6,7 +6,7 @@ import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import { getAuth, newUserAuth } from '../../Redux/AuthReducer/Action';
+import { getAuth, signUp, signIn } from '../../Redux/AuthReducer/Action';
 
 
 const Auth = () => {
@@ -45,7 +45,11 @@ const Auth = () => {
   const handelSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
-    // newUserAuth({ ...formData, dispatch });
+    if (isSignUp) {
+      signUp({ formData: { ...formData }, navigate, dispatch });
+    } else {
+      signIn({ ...formData, navigate, dispatch });
+    }
   };
 
   const handelChange = (e) => {

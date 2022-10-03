@@ -32,6 +32,22 @@ export const logOut = ({ dispatch }) => {
 
 };
 
-export const newUserAuth = ({ }) => {
+export const signUp = ({ formData, navigate, dispatch }) => {
+  try {
+    //signUp the user
+    navigate('/');
+  } catch (error) {
+    console.log(error);
+  }
+  console.log({ ...formData });
+};
 
+export const signIn = async ({ formData: { ...formData }, navigate, dispatch }) => {
+  try {
+    //logIn the user
+    navigate('/');
+  } catch (error) {
+    console.log(error);
+  }
+  console.log({ ...formData });
 };
