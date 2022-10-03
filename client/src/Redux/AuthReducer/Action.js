@@ -31,3 +31,7 @@ export const logOut = ({ dispatch }) => {
   }
 
 };
+
+export const newUserAuth = ({ }) => {
+
+};

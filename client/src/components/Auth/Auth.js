@@ -6,12 +6,20 @@ import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
-import { getAuth } from '../../Redux/AuthReducer/Action';
+import { getAuth, newUserAuth } from '../../Redux/AuthReducer/Action';
 
 
 const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,16 +36,23 @@ const Auth = () => {
       callback: handelCallbackResponse
     });
 
-    google.accounts.id.prompt(
-      { theme: "outlined", size: "large" }
+    google.accounts.id.renderButton(
+      document.getElementById("buttonDiv"), // Ensure the element exist and it is a div to display correcctly
+      { type: "standard", theme: "filled_blue" }  // Customization attributes
     );
-  });
+  }, []);
 
-  const handelSubmit = () => { };
+  const handelSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+    // newUserAuth({ ...formData, dispatch });
+  };
 
-  const handelChange = () => { };
+  const handelChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
-  const handelShowPassword = () => setShowPassword(prevShowPassword => !prevShowPassword);
+  const handelShowPassword = () => { setShowPassword(!showPassword); };
 
   const SwitchMode = () => {
     setIsSignUp(!isSignUp);
@@ -82,15 +97,15 @@ const Auth = () => {
                 <Input
                   name="firstName"
                   label="First Name"
-                  onChange={handelChange}
+                  handelChange={handelChange}
                   autoFocus
                   half
                   xs={6}
                 />
                 <Input
-                  name="Last Name"
+                  name="lastName"
                   label="Last Name"
-                  onChange={handelChange}
+                  handelChange={handelChange}
                   half
                   xs={6}
 
@@ -100,7 +115,7 @@ const Auth = () => {
             <Input
               name="email"
               label="Email Address"
-              onChange={handelChange}
+              handelChange={handelChange}
               type='email'
               xs={6}
 
@@ -108,10 +123,10 @@ const Auth = () => {
             <Input
               name="password"
               label="password"
-              onChange={handelChange}
+              handelChange={handelChange}
               type={showPassword ? 'text' : 'password'}
               xs={6}
-              handelShowPassword={handelShowPassword}
+              handelShowPass={handelShowPassword}
             />
             {isSignUp &&
               <Input
@@ -121,7 +136,7 @@ const Auth = () => {
                 type='password'
               />}
           </Grid>
-
+          <Button id='buttonDiv' sx={{ width: '100%' }}></Button>
           <Button type='submit' fullWidth variant='contained' color='primary' sx={{ mt: '.8rem' }}>
             {isSignUp ? 'Sign Up' : 'Sign In'}
           </Button>

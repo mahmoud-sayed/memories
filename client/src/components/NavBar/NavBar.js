@@ -9,9 +9,13 @@ import { logOut } from '../../Redux/AuthReducer/Action';
 
 const NavBar = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
+
+
+  console.log(user);
 
   const handelLogOut = () => {
     logOut({ dispatch });
