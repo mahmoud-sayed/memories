@@ -9,7 +9,7 @@ import { logOut } from '../../Redux/AuthReducer/Action';
 
 const NavBar = () => {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
-
+  console.log(user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -38,7 +38,7 @@ const NavBar = () => {
           {user ? (
             <Stack direction='row' spacing={2.5} alignItems='center'>
               <Avatar alt={user.name} src={user.picture}>
-                {user.name.charAt(0)}
+                {user.name}
               </Avatar>
               <Typography variant='h6'>{user.name}</Typography>
               <Button variant='contained' color='secondary' onClick={handelLogOut}>LogOut</Button>
